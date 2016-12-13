@@ -7,11 +7,14 @@ package com.mycompany.centraldataservice;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /*
 select *
@@ -23,7 +26,12 @@ where ts >= now()::date and ts < now()::date + interval '1 day';
  *
  * @author Wouter
  */
-@Entity
+@Entity(name="Humidity")
+@NamedQueries({
+@NamedQuery(name="Humidity.getAll", query="select h from Humidity h"),
+@NamedQuery(name="Humidity.sameDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';"),
+    @NamedQuery(name="Humidity.getAfer", query="select h from Humidity h where h.targetTime > :param")
+})
 public class HumidityEntity implements Serializable {
 
     //private static final long serialVersionUID = 1L;
@@ -46,6 +54,11 @@ public class HumidityEntity implements Serializable {
         
     }
 
+    public HumidityEntity(double humidity){
+        setHumidity(humidity);
+        setTime(Timestamp.from(Instant.now()));
+    }
+    
     /**
      * @return the humidity
      */

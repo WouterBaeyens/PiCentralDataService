@@ -13,12 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import static javax.persistence.GenerationType.AUTO;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Wouter
  */
-@Entity
+@Entity(name="Temperature")
+@NamedQueries({
+    @NamedQuery(name="Temperature.getAll", query="select t from Temperature t"),
+    @NamedQuery(name="Temperature.getAfer", query="select t from Temperature t where t.targetTime > :param")
+})
 public class TemperatureEntity {
     
     @Id
