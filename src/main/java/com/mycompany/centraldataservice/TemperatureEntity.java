@@ -5,10 +5,12 @@
  */
 package com.mycompany.centraldataservice;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import static javax.persistence.GenerationType.AUTO;
 import javax.persistence.Id;
 
@@ -17,36 +19,21 @@ import javax.persistence.Id;
  * @author Wouter
  */
 @Entity
-public class DataContainer {
+public class TemperatureEntity {
     
     @Id
-    @GeneratedValue (strategy = AUTO)
-    private long id;
-    
-    
-    private double humidity; 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+        
             
     private double temperature;
     
-    private LocalDateTime time;
+    private Timestamp time;
     
-    public DataContainer(){
+    public TemperatureEntity(){
         
     }
 
-    /**
-     * @return the humidity
-     */
-    public double getHumidity() {
-        return humidity;
-    }
-
-    /**
-     * @param humidity the humidity to set
-     */
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
-    }
 
     /**
      * @return the temperature
@@ -65,14 +52,14 @@ public class DataContainer {
     /**
      * @return the time
      */
-    public LocalDateTime getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(LocalDateTime time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
