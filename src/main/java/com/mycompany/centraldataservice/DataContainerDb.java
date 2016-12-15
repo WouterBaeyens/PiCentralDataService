@@ -66,11 +66,15 @@ public class DataContainerDb {
     
     public void addHumidityData(HumidityEntity humidityData){
         try{
+            System.err.println("start stuff: " + em);
             em.getTransaction().begin();
+            System.out.println("trans started");
             em.persist(humidityData);
+            System.out.println("persisted");
             em.getTransaction().commit();
+            System.out.println("comitted");
         } catch(Exception e){
-            throw new RuntimeException("Error adding data");
+            throw new RuntimeException("[Error adding data]" + e.getMessage());
         }
     }
     
