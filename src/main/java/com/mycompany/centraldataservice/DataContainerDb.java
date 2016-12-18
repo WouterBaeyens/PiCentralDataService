@@ -17,6 +17,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -37,13 +38,22 @@ public class DataContainerDb {
     
     public Map<String,List> getDataForDay(Timestamp time){
         Map<String, List> results = new HashMap<String, List>();
+        DateTime d = new DateTime(time.getTime());
+        DateTime startDay =  d.withTimeAtStartOfDay();
+        DateTime endDay = d.plusDays(1).withTimeAtStartOfDay();
+        Timestamp start = new Timestamp(startDay.getMillis());
+        Timestamp end = new Timestamp(endDay.getMillis());
         try {
             em.getTransaction().begin();
             Query query1 = em.createNamedQuery("Humidity.getDay");
-             List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
+            query1.setParameter("start", start);
+            query1.setParameter("end", end);
+            List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
              results.put("humidity", humidity);
              
              Query query2 = em.createNamedQuery("Temperature.getDay");
+            query2.setParameter("start", start);
+            query2.setParameter("end", end);
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              results.put("temperature", temperature);
              em.getTransaction().commit();

@@ -48,7 +48,7 @@ public class DataContainerDbTest {
     public void testgetAllAfter(){
         Timestamp t = Timestamp.from(Instant.now().minusSeconds(500));
         System.out.println("set time: " + t);
-        Map<String,List> data = db.getDataAfter(t);
+        Map<String,List> data = db.getDataForDay(t);
                 System.out.println("afterData " + data);
     }
     

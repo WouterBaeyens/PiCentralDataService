@@ -26,7 +26,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="Temperature.getAll", query="select t from Temperature t"),
     @NamedQuery(name="Temperature.getAfter", query="select t from Temperature t where t.time > :param"),
     //@NamedQuery(name="Temperature.getDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';")
-    @NamedQuery(name="Temperature.getDay", query="select t from Temperature t where t.time > :param")
+    @NamedQuery(name="Temperature.getDay", query="select t from Temperature t where t.time > :start and t.time < :end")
 })
 public class TemperatureEntity {
     
