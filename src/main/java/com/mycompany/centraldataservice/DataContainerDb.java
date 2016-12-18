@@ -17,7 +17,6 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -38,22 +37,13 @@ public class DataContainerDb {
     
     public Map<String,List> getDataForDay(Timestamp time){
         Map<String, List> results = new HashMap<String, List>();
-        DateTime d = new DateTime(time.getTime());
-        DateTime startDay =  d.withTimeAtStartOfDay();
-        DateTime endDay = d.plusDays(1).withTimeAtStartOfDay();
-        Timestamp start = new Timestamp(startDay.getMillis());
-        Timestamp end = new Timestamp(endDay.getMillis());
         try {
             em.getTransaction().begin();
-            Query query1 = em.createNamedQuery("Humidity.getDay");
-            query1.setParameter("start", start);
-            query1.setParameter("end", end);
-            List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
+            Query query1 = em.createNamedQuery("Humidity.sameDay");
+             List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
              results.put("humidity", humidity);
              
-             Query query2 = em.createNamedQuery("Temperature.getDay");
-            query2.setParameter("start", start);
-            query2.setParameter("end", end);
+             Query query2 = em.createNamedQuery("Temperature.sameday");
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              results.put("temperature", temperature);
              em.getTransaction().commit();
@@ -77,9 +67,6 @@ public class DataContainerDb {
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              em.getTransaction().commit();
             
-             results.put("Temperature", temperature);
-             results.put("humidity", humidity);
-             
              return results;
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -101,32 +88,16 @@ public class DataContainerDb {
             throw new RuntimeException("[Error adding data]" + e.getMessage());
         }
     }
-
-        public void addTemperatureData(TemperatureEntity temperatureData){
-        try{
-            System.err.println("start stuff: " + em);
-            em.getTransaction().begin();
-            System.out.println("trans started");
-            em.persist(temperatureData);
-            System.out.println("persisted");
-            em.getTransaction().commit();
-            System.out.println("comitted");
-        } catch(Exception e){
-            throw new RuntimeException("[Error adding data]" + e.getMessage());
-        }
-    }
     
     public Map<String,List> getDataAfter(Timestamp time){
                 Map<String, List> results = new HashMap<String, List>();
         try {
             em.getTransaction().begin();
-            Query query1 = em.createNamedQuery("Humidity.getAfter");
-            query1.setParameter("param", time);
-            List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
+            Query query1 = em.createNamedQuery("Humidity.sameDay");
+             List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
              results.put("humidity", humidity);
              
-             Query query2 = em.createNamedQuery("Temperature.getAfter");
-             query2.setParameter("param", time);
+             Query query2 = em.createNamedQuery("Temperature.sameday");
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              results.put("temperature", temperature);
              em.getTransaction().commit();
