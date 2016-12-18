@@ -29,7 +29,7 @@ where ts >= now()::date and ts < now()::date + interval '1 day';
 @Entity(name="Humidity")
 @NamedQueries({
 @NamedQuery(name="Humidity.getAll", query="select h from Humidity h"),
-@NamedQuery(name="Humidity.sameDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';"),
+//@NamedQuery(name="Humidity.sameDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';"),
     @NamedQuery(name="Humidity.getAfer", query="select h from Humidity h where h.targetTime > :param")
 })
 public class HumidityEntity implements Serializable {

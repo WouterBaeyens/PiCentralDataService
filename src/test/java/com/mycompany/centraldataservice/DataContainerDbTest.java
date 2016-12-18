@@ -21,13 +21,14 @@ import static org.junit.Assert.*;
  */
 public class DataContainerDbTest {
     
-    private DataContainerDb db;
+    private static DataContainerDb db;
     
     public DataContainerDbTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+                db = new DataContainerDb();
     }
     
     @AfterClass
@@ -36,7 +37,6 @@ public class DataContainerDbTest {
     
     @Before
     public void setUp() {
-        db = new DataContainerDb();
     }
     
     @After
@@ -50,8 +50,8 @@ public class DataContainerDbTest {
     
     @Test
     public void testAddStuff(){
-        db.addHumidityData(new HumidityEntity(13.5));
-        Map<String,List> data = db.getAllData();
+        //db.addHumidityData(new HumidityEntity(13.5));
+        //Map<String,List> data = db.getAllData();
         
     }
     

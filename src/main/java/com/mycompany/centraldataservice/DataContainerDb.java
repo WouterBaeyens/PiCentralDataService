@@ -12,8 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
 
 /**
  *
@@ -21,8 +24,9 @@ import javax.persistence.Query;
  */
 public class DataContainerDb {
    
-    @PersistenceContext (unitName = "PersistenceUnit")
-    EntityManager em;
+    //@PersistenceContext (unitName = "PersistenceUnit")
+    EntityManagerFactory emF = Persistence.createEntityManagerFactory("PersistenceUnit");
+    EntityManager em = emF.createEntityManager();
     
     public Map<String,List> getDataForDay(Timestamp time){
         Map<String, List> results = new HashMap<String, List>();

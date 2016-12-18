@@ -23,7 +23,8 @@ import javax.persistence.NamedQuery;
 @Entity(name="Temperature")
 @NamedQueries({
     @NamedQuery(name="Temperature.getAll", query="select t from Temperature t"),
-    @NamedQuery(name="Temperature.getAfer", query="select t from Temperature t where t.targetTime > :param")
+    @NamedQuery(name="Temperature.getAfer", query="select t from Temperature t where t.targetTime > :param"),
+    @NamedQuery(name="Temperature.getDay", query="select t from Temperature t")
 })
 public class TemperatureEntity {
     
