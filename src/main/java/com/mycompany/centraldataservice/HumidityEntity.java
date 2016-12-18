@@ -30,7 +30,8 @@ where ts >= now()::date and ts < now()::date + interval '1 day';
 @NamedQueries({
 @NamedQuery(name="Humidity.getAll", query="select h from Humidity h"),
 //@NamedQuery(name="Humidity.sameDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';"),
-    @NamedQuery(name="Humidity.getAfer", query="select h from Humidity h where h.time > :param")
+@NamedQuery(name="Humidity.getAfter", query="select h from Humidity h where h.time > :param"),
+@NamedQuery(name="Humidity.getDay", query="select h from Humidity h where h.time > :param")
 })
 public class HumidityEntity implements Serializable {
 
@@ -88,4 +89,7 @@ public class HumidityEntity implements Serializable {
         this.time = time;
     }
 
+    public String toString(){
+        return "" + humidity + "; " + time; 
+    }
 }

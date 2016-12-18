@@ -6,6 +6,7 @@
 package com.mycompany.centraldataservice;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +24,9 @@ import javax.persistence.NamedQuery;
 @Entity(name="Temperature")
 @NamedQueries({
     @NamedQuery(name="Temperature.getAll", query="select t from Temperature t"),
-    @NamedQuery(name="Temperature.getAfer", query="select t from Temperature t where t.time > :param"),
-    @NamedQuery(name="Temperature.getDay", query="select t from Temperature t")
+    @NamedQuery(name="Temperature.getAfter", query="select t from Temperature t where t.time > :param"),
+    //@NamedQuery(name="Temperature.getDay", query="select h from Humidity where ts >= now()::date and ts < now()::date + interval '1 day';")
+    @NamedQuery(name="Temperature.getDay", query="select t from Temperature t where t.time > :param")
 })
 public class TemperatureEntity {
     
@@ -37,8 +39,12 @@ public class TemperatureEntity {
     
     private Timestamp time;
     
-    public TemperatureEntity(){
+    public TemperatureEntity(){}
         
+    public TemperatureEntity(double temp){
+        this.temperature = temp;
+            setTime(Timestamp.from(Instant.now()));
+
     }
 
 
@@ -82,5 +88,9 @@ public class TemperatureEntity {
      */
     public void setId(long id) {
         this.id = id;
+    }
+    
+    public String toString(){
+        return "" + temperature + "; " + time; 
     }
 }

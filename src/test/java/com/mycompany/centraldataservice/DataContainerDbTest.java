@@ -6,6 +6,7 @@
 package com.mycompany.centraldataservice;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
@@ -44,15 +45,19 @@ public class DataContainerDbTest {
     }
 
     @Test
-    public void testAddData(){
-        
+    public void testgetAllAfter(){
+        Timestamp t = Timestamp.from(Instant.now().minusSeconds(500));
+        System.out.println("set time: " + t);
+        Map<String,List> data = db.getDataAfter(t);
+                System.out.println("afterData " + data);
     }
     
     @Test
     public void testAddStuff(){
-        //db.addHumidityData(new HumidityEntity(13.5));
-        //Map<String,List> data = db.getAllData();
-        
+        System.out.println("getAllDataTestNStuff");
+       // db.addTemperatureData(new TemperatureEntity(70.3));
+        Map<String,List> data = db.getAllData();
+        System.out.println("data " + data);
     }
     
     /**

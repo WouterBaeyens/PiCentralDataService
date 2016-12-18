@@ -39,11 +39,11 @@ public class DataContainerDb {
         Map<String, List> results = new HashMap<String, List>();
         try {
             em.getTransaction().begin();
-            Query query1 = em.createNamedQuery("Humidity.sameDay");
+            Query query1 = em.createNamedQuery("Humidity.getDay");
              List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
              results.put("humidity", humidity);
              
-             Query query2 = em.createNamedQuery("Temperature.sameday");
+             Query query2 = em.createNamedQuery("Temperature.getDay");
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              results.put("temperature", temperature);
              em.getTransaction().commit();
@@ -67,6 +67,9 @@ public class DataContainerDb {
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              em.getTransaction().commit();
             
+             results.put("Temperature", temperature);
+             results.put("humidity", humidity);
+             
              return results;
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -88,16 +91,32 @@ public class DataContainerDb {
             throw new RuntimeException("[Error adding data]" + e.getMessage());
         }
     }
+
+        public void addTemperatureData(TemperatureEntity temperatureData){
+        try{
+            System.err.println("start stuff: " + em);
+            em.getTransaction().begin();
+            System.out.println("trans started");
+            em.persist(temperatureData);
+            System.out.println("persisted");
+            em.getTransaction().commit();
+            System.out.println("comitted");
+        } catch(Exception e){
+            throw new RuntimeException("[Error adding data]" + e.getMessage());
+        }
+    }
     
     public Map<String,List> getDataAfter(Timestamp time){
                 Map<String, List> results = new HashMap<String, List>();
         try {
             em.getTransaction().begin();
-            Query query1 = em.createNamedQuery("Humidity.sameDay");
-             List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
+            Query query1 = em.createNamedQuery("Humidity.getAfter");
+            query1.setParameter("param", time);
+            List<HumidityEntity> humidity = new ArrayList<>(query1.getResultList());
              results.put("humidity", humidity);
              
-             Query query2 = em.createNamedQuery("Temperature.sameday");
+             Query query2 = em.createNamedQuery("Temperature.getAfter");
+             query2.setParameter("param", time);
              List<TemperatureEntity> temperature = new ArrayList<>(query2.getResultList());
              results.put("temperature", temperature);
              em.getTransaction().commit();
