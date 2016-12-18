@@ -25,8 +25,15 @@ import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
 public class DataContainerDb {
    
     //@PersistenceContext (unitName = "PersistenceUnit")
-    EntityManagerFactory emF = Persistence.createEntityManagerFactory("PersistenceUnit");
-    EntityManager em = emF.createEntityManager();
+    EntityManagerFactory emF;
+    EntityManager em;
+
+    public DataContainerDb() {
+        emF = Persistence.createEntityManagerFactory("PersistenceUnit");
+        em = emF.createEntityManager();
+    }
+    
+    
     
     public Map<String,List> getDataForDay(Timestamp time){
         Map<String, List> results = new HashMap<String, List>();
