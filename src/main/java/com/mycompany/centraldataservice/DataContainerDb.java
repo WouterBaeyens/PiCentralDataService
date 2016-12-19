@@ -7,16 +7,13 @@ package com.mycompany.centraldataservice;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
 
 /**
  *

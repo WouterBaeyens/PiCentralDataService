@@ -9,6 +9,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class PiApp extends ResourceConfig
 {
 	public PiApp(){
-		packages("be.ucll.ww.pi");
+		packages("com.mycompany");
 	}
 }
